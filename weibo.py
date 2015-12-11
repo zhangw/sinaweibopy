@@ -280,6 +280,7 @@ class APIClient(object):
         return not self.access_token or time.time() > self.expires
 
     def __getattr__(self, attr):
+        print attr
         if '__' in attr:
             return getattr(self.get, attr)
         return _Callable(self, attr)
