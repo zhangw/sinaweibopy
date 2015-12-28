@@ -23,15 +23,11 @@ def main():
     help="whether make a request to get the new ACCESS_TOKEN, True or False?", default=False)
   parser.add_argument("-code", "--code", type=str,\
     help="code used to get the new ACCESS_TOKEN")
-  parser.print_help()
   args = parser.parse_args()
-  #print args
-
   APP_KEY = args.key
   APP_SECRET = args.secret 
   CALLBACK_URL = args.url
   ACCESS_TOKEN = args.token
-
   from snspy import APIClient,SinaWeiboMixin
   if args.request_authcode:
     client = APIClient(SinaWeiboMixin,app_key=APP_KEY,app_secret=APP_SECRET,redirect_uri=CALLBACK_URL)
