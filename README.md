@@ -133,6 +133,11 @@ f.close()  # you need to do this manually
 Please notice that what is uploaded must be a file-like object. str can be
 wrapped using `StringIO`.
 
+## main.py
+
+`main.py` used to demonstrate how to get the `APIClient` or request the `authcode` or request a new `access_token`.
+run `python main.py --help` to view the details.
+
 ## wiki
 
 For more information, please refer to
