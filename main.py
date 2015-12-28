@@ -16,14 +16,16 @@ def main():
     help="input the CALLBACK_URL", default="http://127.0.0.1/callback")
   parser.add_argument("-token", "--token", type=str,\
     help="input the ACCESS_TOKEN", default="2.00hYRkpC9S3DVE203bceb0140FaZub")
-  parser.add_argument("-request_authcode", "--request_authcode", type=bool,\
-    help="whether make a request to access CALLBACK_URL to get the code", default=False)
-  parser.add_argument("-request_token", "--request_token", type=bool,\
-    help="whether make a request to get the new ACCESS_TOKEN", default=False)
+  group_authcode_token = parser.add_mutually_exclusive_group(required=False)
+  group_authcode_token.add_argument("-request_authcode", "--request_authcode", type=bool,\
+    help="whether make a request to access CALLBACK_URL to get the code, True or False?", default=False)
+  group_authcode_token.add_argument("-request_token", "--request_token", type=bool,\
+    help="whether make a request to get the new ACCESS_TOKEN, True or False?", default=False)
   parser.add_argument("-code", "--code", type=str,\
     help="code used to get the new ACCESS_TOKEN")
+  parser.print_help()
   args = parser.parse_args()
-  print args
+  #print args
 
   APP_KEY = args.key
   APP_SECRET = args.secret 
@@ -34,11 +36,11 @@ def main():
   if args.request_authcode:
     client = APIClient(SinaWeiboMixin,app_key=APP_KEY,app_secret=APP_SECRET,redirect_uri=CALLBACK_URL)
     url = client.get_authorize_url()
-    print url
-  elif args.request_token:
+    print "the authorize url: %s used to get the authcode" % url
+  elif args.request_token and args.code:
     client = APIClient(SinaWeiboMixin,app_key=APP_KEY,app_secret=APP_SECRET,redirect_uri=CALLBACK_URL)
     r = client.request_access_token(args.code)
-    print r
+    print "the new access token:%s" % r
   else:
     client = APIClient(SinaWeiboMixin,app_key=APP_KEY,app_secret=APP_SECRET,redirect_uri=CALLBACK_URL,access_token=ACCESS_TOKEN)
     print client._mixin.__dict__
